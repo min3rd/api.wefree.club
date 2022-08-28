@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\AnimeController;
+use App\Models\Anime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\AppMiddleware;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,12 +15,22 @@ use App\Http\Middleware\AppMiddleware;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::middleware([AppMiddleware::class])->group(function (){
-    Route::get("/test", function (){
-        return response("");
+Route::prefix("animes")->group(function (){
+    Route::get("/", function (Request $request){
+        $page = $request->query("page");
+        $size = $request->query("size");
+        return [
+            "page" => $page,
+            "size" => $size,
+        ];
+    });
+    Route::post("/", function (Request $request){
+        var_dump($request->all());
+       $anime = Anime::updateOrCreate($request->all());
+       return $anime;
     });
 });
