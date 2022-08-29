@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Anime;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class AnimeSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,6 @@ class AnimeSeeder extends Seeder
     public function run()
     {
         //
-        Anime::factory(10)->hasAuthors(10)->create();
+        Category::factory(10)->create();
     }
 }
