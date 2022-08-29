@@ -29,7 +29,6 @@ Route::prefix("animes")->group(function (){
         ];
     });
     Route::post("/", function (Request $request){
-        var_dump($request->all());
        $anime = Anime::updateOrCreate($request->all());
        return $anime;
     });

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string("short_description")->nullable()->change();
             $table->string("thumbnail")->nullable()->change();
             $table->text("images")->nullable()->change();
-            $table->timestamp("published_at")->nullable()->default(null)->change();
+            $table->timestamp("published_at")->nullable()->change();
             $table->integer("flag")->default(0)->change();
         });
     }

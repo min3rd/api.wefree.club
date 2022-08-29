@@ -16,18 +16,18 @@ return new class extends Migration
         Schema::create('animes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name");
-            $table->string("short_name");
-            $table->string("jp_name");
-            $table->string("short_jp_name");
-            $table->string("en_name");
-            $table->string("short_en_name");
-            $table->string("description");
-            $table->string("short_description");
-            $table->string("thumbnail");
-            $table->text("images");
-            $table->timestamp("published_at");
-            $table->integer("flag");
+            $table->string("name")->nullable();
+            $table->string("short_name")->nullable();
+            $table->string("jp_name")->nullable();
+            $table->string("short_jp_name")->nullable();
+            $table->string("en_name")->nullable();
+            $table->string("short_en_name")->nullable();
+            $table->string("description")->nullable();
+            $table->string("short_description")->nullable();
+            $table->string("thumbnail")->nullable();
+            $table->text("images")->nullable();
+            $table->timestamp("published_at")->nullable();
+            $table->integer("flag")->nullable();
         });
     }
 
