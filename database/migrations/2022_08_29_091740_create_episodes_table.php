@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text("server_2")->nullable();
             $table->text("server_3")->nullable();
             $table->integer("flag")->default(0);
+            $table->bigInteger("anime_id")->nullable();
         });
     }
 

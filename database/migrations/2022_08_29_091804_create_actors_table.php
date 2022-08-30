@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text("images")->nullable();
             $table->date("birthday")->nullable();
             $table->smallInteger("gender")->default(0);
-            $table->integer("flag");
+            $table->integer("flag")->default(0);
         });
     }
 

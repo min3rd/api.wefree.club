@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('anime__author', function (Blueprint $table) {
+        Schema::create('anime_author', function (Blueprint $table) {
             $table->id();
-            $table->integer("anime_id")->unsigned();
-            $table->integer("author_id")->unsigned();
-            $table->timestamps();
+            $table->bigInteger("anime_id")->unsigned();
+            $table->bigInteger("author_id")->unsigned();
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anime__author');
+        Schema::dropIfExists('anime_author');
     }
 };

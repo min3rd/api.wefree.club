@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string("short_description")->nullable();
             $table->text("thumbnail")->nullable();
             $table->text("images")->nullable();
-            $table->integer("flag");
+            $table->integer("flag")->default(0);
         });
     }
 

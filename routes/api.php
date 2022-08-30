@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimeController;
 use App\Models\Anime;
 use App\Models\Author;
+use App\Models\Episode;
 use App\Util\ParameterUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,26 +31,26 @@ Route::prefix("animes")->group(function (){
             "size" => $size,
         ];
     });
+
     Route::post("/", function (Request $request){
         $model = $request->all();
-        $id = ParameterUtils::Exist($model, "id");
-        if(!$id){
-            $anime = Anime::updateOrCreate($request->all());
-        }else{
-            $anime = Anime::findOrFail($id);
-            if(!$anime){
-                return false;
-            }
-            $anime->fill($model);
-            $anime->save();
+        $authors = ParameterUtils::Exist($model, "authors", []);
+        $episodes = ParameterUtils::Exist($model, "episodes", []);
+        unset($model["authors"]);
+        unset($model["episodes"]);
+        /**
+         * @var Anime $anime
+         */
+        $anime = Anime::updateOrCreate($model);
+        if(count($authors) > 0){
+            $ids = Author::saveAll_Ids($authors);
+            $anime->authors()->detach($ids);
+            $anime->authors()->attach($ids);
         }
-        if(!ParameterUtils::Exist($model, "authors")){
-            return $anime;
+        if(count($episodes) > 0){
+            $episodes = Episode::saveAll($episodes);
+            $anime->episodes()->saveMany($episodes);
         }
-        $authors = $model["authors"];
-        var_dump($authors);
-        $authors = Author::saveAll($authors);
-        $anime->authors->attach($authors);
         return $anime;
     });
     Route::get("/search", function(Request $request){
