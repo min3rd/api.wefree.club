@@ -3,8 +3,11 @@
 use App\Http\Controllers\AnimeController;
 use App\Models\Anime;
 use App\Models\Author;
+use App\Models\Category;
 use App\Models\Episode;
+use App\Services\GraphService;
 use App\Util\ParameterUtils;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -60,5 +63,19 @@ Route::prefix("animes")->group(function (){
     });
     Route::get("/episodes", function (Request $request){
 
+    });
+});
+
+Route::prefix("categories")->group(function (){
+    Route::get("/", function (Request $request){
+        Category::all();
+    });
+});
+
+Route::prefix("graph")->group(function (){
+    Route::get("/test/{username}", function (Request $request){
+        $username = $request->input("username");
+        $user = GraphService::getUserInfo($username);
+        return $user;
     });
 });
