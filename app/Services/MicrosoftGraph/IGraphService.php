@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Services;
-
-use JsonSerializable;
-use Microsoft\Graph\Model\User;
+namespace App\Services\MicrosoftGraph;
 
 interface IGraphService
 {
@@ -14,15 +11,21 @@ interface IGraphService
     const HEADER_AUTHORIZATION = "Authorization";
     const HEADER_BEARER_PREFIX = "Bearer ";
     const HEADERS = "headers";
+    const BODY = "body";
 
     const USERS = "users";
     const DRIVE = "drive";
+    const DRIVES = "drives";
     const ITEMS = "items";
     const ROOT = "root";
     const CONTENT = "content";
     const CREATE_UPLOAD_SESSION = "createUploadSession";
+    const CHILDREN = "children";
 
-    const API_SEPERATOR = "/";
+    const API_SEPARATOR = "/";
+
+    const KEY_VALUE = "value";
+    const KEY_ODATA_CONTEXT = "@odata.context";
 
     public function init();
 
@@ -53,4 +56,16 @@ interface IGraphService
     public function content(): IGraphService;
 
     public function root(): IGraphService;
+
+    public function createUploadSession(): IGraphService;
+
+    public function getBody(): mixed;
+
+    public function addBody(string $key, mixed $value);
+
+    public function drives(string $search): IGraphService;
+
+    public function processResponse(mixed $response): mixed;
+
+    public function children(): IGraphService;
 }

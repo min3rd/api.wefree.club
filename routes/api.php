@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\AnimeController;
 use App\Models\Anime;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Episode;
-use App\Services\GraphService;
+use App\Services\MicrosoftGraph\DriveGraphService;
+use App\Services\MicrosoftGraph\GraphService;
 use App\Util\ParameterUtils;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Microsoft\Graph\Model\User;
+use Microsoft\Graph\Model\Drive;
+use Microsoft\Graph\Model\DriveItem;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,9 +75,13 @@ Route::prefix("categories")->group(function () {
 });
 
 Route::prefix("graph")->group(function () {
-    Route::get("/test/{username}", function (Request $request) {
-        $username = $request->input("username");
+    Route::get("/drives", function () {
         $graphClient = GraphService::create();
-        return $graphClient->builder()->users($username)->buildRequest()->get();
+        /**
+         * @var Drive $drive
+         */
+        $drive = $graphClient->builder()->users("vanminh.vu@wefree.club")->drive()->buildRequest(Drive::class)->get();
+        $children = $graphClient->builder()->drives($drive->getId())->root()->children()->buildRequest(DriveItem::class)->get();
+        return $children;
     });
 });
